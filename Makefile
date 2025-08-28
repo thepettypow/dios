@@ -2,39 +2,49 @@
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -g -O2
+CFLAGS = -Wall -Wextra -std=c99 -g -O2 -Iinclude
 LDFLAGS = 
 
 # Project name
 PROJECT = esp32_led_sim
 
+# Directories
+SRCDIR = src
+INCDIR = include
+BUILDDIR = build
+DOCSDIR = docs
+
 # Source files
-SRCS = main.c gpio_mock.c led_control.c button_control.c
+SRCS = $(SRCDIR)/main.c $(SRCDIR)/gpio_mock.c $(SRCDIR)/led_control.c $(SRCDIR)/button_control.c
 
 # Object files
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(BUILDDIR)/%.o)
 
 # Header files
-HEADERS = gpio_mock.h led_control.h button_control.h
+HEADERS = $(INCDIR)/gpio_mock.h $(INCDIR)/led_control.h $(INCDIR)/button_control.h
 
 # Default target
 all: $(PROJECT)
 
 # Build the main executable
-$(PROJECT): $(OBJS)
+$(PROJECT): $(OBJS) | $(BUILDDIR)
 	@echo "Linking $(PROJECT)..."
 	$(CC) $(OBJS) -o $(PROJECT) $(LDFLAGS)
 	@echo "Build complete: $(PROJECT)"
 
+# Create build directory
+$(BUILDDIR):
+	@mkdir -p $(BUILDDIR)
+
 # Compile source files to object files
-%.o: %.c $(HEADERS)
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) | $(BUILDDIR)
 	@echo "Compiling $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
-	rm -f $(OBJS) $(PROJECT)
+	rm -rf $(BUILDDIR) $(PROJECT)
 	@echo "Clean complete."
 
 # Run the program
@@ -91,7 +101,7 @@ help:
 .PHONY: all clean run debug release install uninstall valgrind format help
 
 # Dependencies
-main.o: main.c gpio_mock.h led_control.h button_control.h
-gpio_mock.o: gpio_mock.c gpio_mock.h
-led_control.o: led_control.c led_control.h gpio_mock.h
-button_control.o: button_control.c button_control.h gpio_mock.h
+$(BUILDDIR)/main.o: $(SRCDIR)/main.c $(INCDIR)/gpio_mock.h $(INCDIR)/led_control.h $(INCDIR)/button_control.h
+$(BUILDDIR)/gpio_mock.o: $(SRCDIR)/gpio_mock.c $(INCDIR)/gpio_mock.h
+$(BUILDDIR)/led_control.o: $(SRCDIR)/led_control.c $(INCDIR)/led_control.h $(INCDIR)/gpio_mock.h
+$(BUILDDIR)/button_control.o: $(SRCDIR)/button_control.c $(INCDIR)/button_control.h $(INCDIR)/gpio_mock.h

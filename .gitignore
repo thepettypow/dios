@@ -1,0 +1,95 @@
+# Build artifacts
+build/
+*.o
+*.obj
+*.exe
+*.out
+*.app
+esp32_led_sim
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Compiler-specific files
+*.gch
+*.pch
+
+# Static analysis
+*.sarif
+
+# Memory debugging
+vgcore.*
+core
+core.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Package managers
+node_modules/
+*.tgz
+*.tar.gz
+
+# System files
+.directory
+*.lnk
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Documentation build
+docs/html/
+docs/latex/
+
+# Test coverage
+*.gcov
+*.gcda
+*.gcno
+coverage/
+
+# Profiling
+gmon.out
+*.prof
+
+# CMake (if used in future)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+# Autotools (if used in future)
+Makefile.in
+aclocal.m4
+autom4te.cache/
+config.guess
+config.sub
+configure
+depcomp
+install-sh
+ltmain.sh
+missing
+
+# Local configuration
+.env
+.env.local
+config.local
+
+# Examples output (if any)
+examples/output/
+examples/*.out
