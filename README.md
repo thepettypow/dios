@@ -1,4 +1,6 @@
-# ESP32 LED Control Simulation
+# Digital Input/Output Simulation
+
+## ESP32 LED Control Simulation
 
 A C program that simulates controlling LEDs with push buttons on an ESP32 microcontroller. Since no hardware is available, this implementation uses mock GPIO registers and functions to represent pin states, providing a realistic simulation of embedded hardware control.
 
